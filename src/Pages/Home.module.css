@@ -1,0 +1,7 @@
+.container {
+  display: flex;
+}
+.mapContainer {
+  flex: 1;
+  padding: 1px;
+}
