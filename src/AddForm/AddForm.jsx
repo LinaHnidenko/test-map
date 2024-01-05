@@ -1,67 +1,74 @@
 import React, { useState } from "react";
+import { getCoordinates } from "../services/fetch";
+import css from "./AddForm.module.css";
 
-import axios from "axios";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import axios from "axios";
+
+const POST_URL = "https://65971a09668d248edf229561.mockapi.io/ads";
 
 const AddForm = () => {
   const [address, setAddress] = useState("");
-  const [coordinates, setCoordinates] = useState(null);
 
-  const handleGeocode = async () => {
-    const options = {
-      method: "GET",
-      url: "https://forward-reverse-geocoding.p.rapidapi.com/v1/forward",
-      params: {
-        city: address,
-      },
-      headers: {
-        "X-RapidAPI-Key": "0561863ecdmsha19dc02207be928p1f1a09jsn4563bc2d6a3e",
-        "X-RapidAPI-Host": "forward-reverse-geocoding.p.rapidapi.com",
-      },
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const cityValue = e.target.elements.city.value;
+    const titleValue = e.target.elements.title.value;
+    const imageValue = e.target.elements.image.value;
+    const priceValue = e.target.elements.price.value;
+
+    const formData = {
+      city: cityValue,
+      title: titleValue,
+      image: imageValue,
+      price: priceValue,
     };
 
-    try {
-      const response = await axios(options);
-      const lat = response.data[0].lat;
-      const lon = response.data[0].lon;
-      setCoordinates([lat, lon]);
-      console.log(response.data[0].lat);
-    } catch (error) {
-      console.error(error);
-    }
+    const fetchCoordinates = async () => {
+      try {
+        const resp = await getCoordinates(address);
+        const lat = resp.data[0].lat;
+        const lon = resp.data[0].lon;
 
-    // try {
-    //   const response = await axios.get(
-    //     `https://api.opencagedata.com/geocode/v1/json?q=${encodeURIComponent(
-    //       address
-    //     )}&key=YOUR_API_KEY`
-    //   );
-    //   const { lat, lng } = response.data.results[0].geometry;
-    //   setCoordinates({ lat, lng });
-    // } catch (error) {
-    //   console.error("Error geocoding address:", error);
-    // }
+        formData.geo = [lat, lon];
+
+        const postResponce = await axios.post(POST_URL, formData);
+        console.log("Posted", postResponce.data);
+      } catch (error) {
+        console.log("Error", error.message);
+      }
+    };
+
+    fetchCoordinates();
   };
 
   return (
-    <div>
+    <form onSubmit={handleSubmit} className={css.form}>
       <label>
-        Enter Address:
+        City:
         <input
+          name="city"
           type="text"
           value={address}
           onChange={(e) => setAddress(e.target.value)}
         />
       </label>
-      <button onClick={handleGeocode}>Geocode</button>
+      <label>
+        Title
+        <input type="text" name="title" />
+      </label>
+      <label>
+        Image
+        <input type="text" name="image" />
+      </label>
+      <label>
+        Price in UAH
+        <input type="number" name="price" />
+      </label>
+      <button>Geocode</button>
 
-      {coordinates && (
-        <div>
-          <h2>Coordinates:</h2>
-          <p>Latitude: {coordinates.lat}</p>
-          <p>Longitude: {coordinates.lon}</p>
-
-          {/* <MapContainer
+      {/* <MapContainer
             center={coordinates}
             zoom={13}
             style={{ height: "300px" }}
@@ -71,9 +78,7 @@ const AddForm = () => {
               <Popup>{address}</Popup>
             </Marker>
           </MapContainer> */}
-        </div>
-      )}
-    </div>
+    </form>
   );
   // return (
   //   <aside>
