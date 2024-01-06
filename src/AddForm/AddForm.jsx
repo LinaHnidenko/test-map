@@ -1,13 +1,14 @@
 import React, { useState } from "react";
-import { getCoordinates } from "../services/fetch";
+import { getCoordinates } from "../services/API";
 import css from "./AddForm.module.css";
 
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+// import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import axios from "axios";
+import { getAdsInfo } from "../services/API";
 
-const POST_URL = "https://65971a09668d248edf229561.mockapi.io/ads";
+const POST_URL = "https://65986474668d248edf248d11.mockapi.io/advertisement";
 
-const AddForm = () => {
+const AddForm = ({ updateAds }) => {
   const [address, setAddress] = useState("");
 
   const handleSubmit = (e) => {
@@ -35,6 +36,9 @@ const AddForm = () => {
 
         const postResponce = await axios.post(POST_URL, formData);
         console.log("Posted", postResponce.data);
+
+        const response = await getAdsInfo();
+        updateAds(response.data);
       } catch (error) {
         console.log("Error", error.message);
       }
@@ -67,29 +71,8 @@ const AddForm = () => {
         <input type="number" name="price" />
       </label>
       <button>Geocode</button>
-
-      {/* <MapContainer
-            center={coordinates}
-            zoom={13}
-            style={{ height: "300px" }}
-          >
-            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-            <Marker position={[coordinates.lat, coordinates.lng]}>
-              <Popup>{address}</Popup>
-            </Marker>
-          </MapContainer> */}
     </form>
   );
-  // return (
-  //   <aside>
-  //     <form>
-  //       <label>
-  //         <input placeholder="Enter city"></input>
-  //       </label>
-  //       <button>Submit</button>
-  //     </form>
-  //   </aside>
-  // );
 };
 
 export default AddForm;
