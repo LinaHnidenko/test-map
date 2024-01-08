@@ -24,7 +24,7 @@ const SidebarItem = ({ title, image, price, onSelect, isSelected, city }) => {
             width="20px"
             height="20px"
           />
-          {city.charAt(0).toUpperCase() + city.slice(1)}{" "}
+          {city.charAt(0).toUpperCase() + city.slice(1)}
         </p>
       </li>
     </>

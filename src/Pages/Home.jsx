@@ -1,8 +1,8 @@
-import React, { useCallback, useEffect, useState } from "react";
-import Map from "../Map/Map";
-import Header from "../Header/Header";
-import Sidebar from "../Sidebar/Sidebar";
-import AddForm from "../AddForm/AddForm";
+import React, { useEffect, useState } from "react";
+import Map from "../components/Map/Map";
+import Header from "../components/Header/Header";
+import Sidebar from "../components/Sidebar/Sidebar";
+import AddForm from "../components/AddForm/AddForm";
 import css from "./Home.module.css";
 import { getAdsInfo } from "../services/API";
 
@@ -26,6 +26,7 @@ const Home = () => {
         console.error(error.message);
       }
     };
+
     fetchData();
   }, [loaded]);
 

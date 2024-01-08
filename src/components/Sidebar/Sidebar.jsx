@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
-
+import React from "react";
 import SidebarItem from "../SideberItem/SidebarItem";
 
 const Sidebar = ({ setSelectedAd, ads, selectedAd, filteredAds }) => {

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { getCoordinates, MOCK_API_URL } from "../services/API";
+import { getCoordinates, MOCK_API_URL } from "../../services/API";
 import css from "./AddForm.module.css";
 import { Notify } from "notiflix/build/notiflix-notify-aio";
 import axios from "axios";
@@ -31,10 +31,10 @@ const AddForm = ({ updateAds, ads }) => {
         const lat = resp.data[0].lat;
         const lon = resp.data[0].lon;
 
+        // to add one more marker in the same city
         const isOnBackend = ads.find(
           (ad) => ad.city.toLowerCase() === address.toLowerCase()
         );
-
         if (address === isOnBackend?.city) {
           const sameLat = parseFloat(lat) + 0.001;
           const sameLon = parseFloat(lon) + 0.001;
@@ -63,7 +63,6 @@ const AddForm = ({ updateAds, ads }) => {
 
   return (
     <aside className={css.asideForm}>
-      {" "}
       <form onSubmit={handleSubmit} className={`${css.form} container`}>
         <h2 className={css.title}>Enter your ads info</h2>
         <label>

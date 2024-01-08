@@ -15,7 +15,7 @@ const Header = ({ ads, setFilteredAds }) => {
     const filteredAds = ads.filter(
       (ad) => ad.city.toLowerCase().trim() === query
     );
-
+    // find the card by query
     setFilteredAds(filteredAds);
 
     if (filteredAds.length < 1) {
@@ -25,7 +25,7 @@ const Header = ({ ads, setFilteredAds }) => {
     }
   };
   return (
-    <header className={` ${css.header}`}>
+    <header className={css.header}>
       <p className={css.title}>Rent your Coffee Machine</p>
       <form onSubmit={handlerSubmit} className={css.form}>
         <label>
