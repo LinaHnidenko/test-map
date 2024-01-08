@@ -26,11 +26,12 @@ const Header = ({ ads, setFilteredAds }) => {
   };
   return (
     <header className={` ${css.header}`}>
+      <p className={css.title}>Rent your Coffee Machine</p>
       <form onSubmit={handlerSubmit} className={css.form}>
         <label>
           <input
             className={css.input}
-            placeholder="Enter city"
+            placeholder="Enter city in English"
             onChange={handleInputChange}
           />
         </label>

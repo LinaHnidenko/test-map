@@ -52,22 +52,25 @@
 .linksWrapper {
   display: flex;
   justify-content: center;
-  align-items: center;
+
   flex-direction: column;
   gap: 20px;
 
   padding: 5px;
   max-width: 300px;
-  margin: 0 auto;
 }
 
 .list {
   display: flex;
   justify-content: center;
   flex-direction: column;
-  gap: 20px;
+  gap: 25px;
+}
+
+.span {
+  color: #6fa5d2;
 }
 
 .listItem {
-  width: 200px;
+  font-size: x-small;
 }

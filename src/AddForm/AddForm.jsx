@@ -116,18 +116,18 @@ const AddForm = ({ updateAds, ads }) => {
       </form>
       <div className={css.linksWrapper}>
         <h3>
-          To add image for your ad, you can use one of these url in 'image'
-          input
+          To add image for your ad, you can copy one of these
+          <span className={css.span}> URL</span> in 'image' input
         </h3>
         <ul className={css.list}>
           <li className={css.listItem}>
             https://images.pexels.com/photos/4349798/pexels-photo-4349798.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2
           </li>
           <li className={css.listItem}>
-            'https://images.pexels.com/photos/6032796/pexels-photo-6032796.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
+            https://images.pexels.com/photos/6032796/pexels-photo-6032796.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2
           </li>
           <li className={css.listItem}>
-            'https://images.pexels.com/photos/302889/pexels-photo-302889.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
+            https://images.pexels.com/photos/302889/pexels-photo-302889.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2
           </li>
         </ul>
       </div>
