@@ -1,7 +1,6 @@
 import axios from "axios";
 
-// const MOCK_API_URL = "https://65971a09668d248edf229561.mockapi.io/ads";
-const MOCK_API_URL =
+export const MOCK_API_URL =
   "https://65986474668d248edf248d11.mockapi.io/advertisement";
 
 export const getCoordinates = async (city) => {
@@ -19,7 +18,7 @@ export const getCoordinates = async (city) => {
 
   try {
     const response = await axios(options);
-    // console.log(response.data);
+
     return response;
   } catch (error) {
     console.error(error);

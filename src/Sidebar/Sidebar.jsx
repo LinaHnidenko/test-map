@@ -1,41 +1,34 @@
-import React, { useEffect, useState } from "react";
-import { getAdsInfo } from "../services/API";
+import React, { useEffect, useRef, useState } from "react";
+
 import SidebarItem from "../SideberItem/SidebarItem";
 
-const Sidebar = ({ setSelectedAd, updateAds, selectedAd }) => {
-  const [adsInfo, setAdsInfo] = useState([]);
-  const [loaded, setLoaded] = useState(false);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        if (!loaded) {
-          const response = await getAdsInfo();
-
-          setAdsInfo(response.data);
-          setLoaded(true);
-          updateAds(response.data);
-        }
-      } catch (error) {
-        console.error(error.message);
-      }
-    };
-    fetchData();
-  }, [loaded, updateAds]);
-
+const Sidebar = ({ setSelectedAd, ads, selectedAd, filteredAds }) => {
   return (
-    <aside>
-      <ul>
-        {adsInfo.map(({ title, price, image, id }) => (
-          <SidebarItem
-            key={id}
-            title={title}
-            price={price}
-            image={image}
-            isSelected={selectedAd && selectedAd.id === id}
-            onSelect={() => setSelectedAd({ id, title, price, image })}
-          />
-        ))}
+    <aside className="container">
+      <ul className="">
+        {filteredAds.length > 0
+          ? filteredAds.map(({ title, price, image, id, city }) => (
+              <SidebarItem
+                key={id}
+                title={title}
+                price={price}
+                image={image}
+                city={city}
+                isSelected={selectedAd && selectedAd.id === id}
+                onSelect={() => setSelectedAd({ id, title, price, image })}
+              />
+            ))
+          : ads.map(({ title, price, image, id, city }) => (
+              <SidebarItem
+                key={id}
+                title={title}
+                price={price}
+                image={image}
+                city={city}
+                isSelected={selectedAd && selectedAd.id === id}
+                onSelect={() => setSelectedAd({ id, title, price, image })}
+              />
+            ))}
       </ul>
     </aside>
   );

@@ -1,13 +1,33 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Map from "../Map/Map";
 import Header from "../Header/Header";
 import Sidebar from "../Sidebar/Sidebar";
 import AddForm from "../AddForm/AddForm";
 import css from "./Home.module.css";
+import { getAdsInfo } from "../services/API";
 
 const Home = () => {
   const [selectedAd, setSelectedAd] = useState(null);
+  const [filteredAds, setFilteredAds] = useState([]);
   const [ads, setAds] = useState([]);
+
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (!loaded) {
+          const response = await getAdsInfo();
+
+          setAds(response.data);
+          setLoaded(true);
+        }
+      } catch (error) {
+        console.error(error.message);
+      }
+    };
+    fetchData();
+  }, [loaded]);
 
   const updateAds = (newAds) => {
     setAds(newAds);
@@ -19,9 +39,9 @@ const Home = () => {
 
   return (
     <>
-      <Header />
+      <Header ads={ads} setFilteredAds={setFilteredAds} />
       <div className={css.container}>
-        <AddForm updateAds={updateAds} />
+        <AddForm updateAds={updateAds} ads={ads} />
         <div className={css.mapContainer}>
           <Map
             selectedAd={selectedAd}
@@ -31,7 +51,8 @@ const Home = () => {
         </div>
         <Sidebar
           setSelectedAd={setSelectedAd}
-          updateAds={updateAds}
+          ads={ads}
+          filteredAds={filteredAds}
           selectedAd={selectedAd}
         />
       </div>
